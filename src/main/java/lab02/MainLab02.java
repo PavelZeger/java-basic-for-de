@@ -16,11 +16,11 @@ public class MainLab02 {
         soldiers.add(new Soldier("Greg", 35));
         soldiers.add(new Soldier("Chandler", 29));
 
-        SoldierService soldierService = new SoldierService();
+        SoldierServiceImpl soldierServiceImpl = new SoldierServiceImpl();
 
-        System.out.println("The average age of soldiers: " + soldierService.getAverageAge(soldiers));
-        System.out.println("The summary age of soldiers: " + soldierService.getSummaryAge(soldiers));
-        System.out.println("The maximum age of soldiers: " + soldierService.getMaxAge(soldiers));
+        System.out.println("The average age of soldiers: " + soldierServiceImpl.getAverageAge(soldiers));
+        System.out.println("The summary age of soldiers: " + soldierServiceImpl.getSummaryAge(soldiers));
+        System.out.println("The maximum age of soldiers: " + soldierServiceImpl.getMaxAge(soldiers));
 
     }
 }
