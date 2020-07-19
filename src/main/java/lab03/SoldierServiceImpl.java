@@ -7,7 +7,7 @@ import java.util.ArrayList;
  */
 public class SoldierServiceImpl implements SoldierService {
 
-    private ArrayList<Soldier> soldiers;
+    private ArrayList<Soldier> soldiers = new ArrayList<>();
 
     @Override
     public double getAverageAge() {
@@ -35,10 +35,10 @@ public class SoldierServiceImpl implements SoldierService {
 
     @Override
     public void addSoldier(Soldier soldier) {
-        if (soldiers.contains(soldier)) {
+        if (this.soldiers.contains(soldier)) {
             System.out.println("The soldier " + soldier.getName() + " exists!");
         } else {
-            soldiers.add(soldier);
+            this.soldiers.add(soldier);
         }
     }
 
