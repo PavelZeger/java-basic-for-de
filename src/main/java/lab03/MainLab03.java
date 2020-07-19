@@ -15,13 +15,14 @@ public class MainLab03 {
         soldierService.addSoldier(new Soldier("David", 40, 3));
         soldierService.addSoldier(new Soldier("Greg", 35, 4));
         soldierService.addSoldier(new Soldier("Chandler", 29, 5));
-        soldierService.addSoldier(new Soldier("Chandler", 29, 5));
 
         System.out.println("The average age of soldiers: " + soldierService.getAverageAge());
         System.out.println("The summary age of soldiers: " + soldierService.getSummaryAge());
         System.out.println("The maximum age of soldiers: " + soldierService.getMaxAge());
 
         soldierService.printAllSoldiersNames();
+
+        soldierService.addSoldier(new Soldier("Chandler", 29, 5));
 
     }
 }
