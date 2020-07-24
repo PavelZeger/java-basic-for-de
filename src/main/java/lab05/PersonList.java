@@ -8,123 +8,131 @@ import java.util.function.UnaryOperator;
  */
 public class PersonList implements List<Person> {
 
-    private List<Person> persons;
+    private Person[] persons;
+
+    public PersonList(Person[] persons) {
+        this.persons = persons;
+    }
 
     @Override
     public int size() {
-        return persons.size();
+        return persons.length;
     }
 
     @Override
     public boolean isEmpty() {
-        return persons.size() == 0;
+        return persons.length == 0;
     }
 
     @Override
     public boolean contains(Object o) {
-        return persons.contains((Person) o);
+        for (Person person : persons) {
+            if (person.equals(o)) {
+                return true;
+            }
+        }
+        return false;
     }
 
-    //todo
     @Override
     public Iterator<Person> iterator() {
-        return null;
+        return new Iterator<Person>() {
+
+            private int pos = 0 ;
+
+            public boolean hasNext() {
+                return persons.length > pos;
+            }
+
+            public Person next() {
+                return persons[pos++];
+            }
+
+            public void remove() {
+                throw new UnsupportedOperationException("Cannot remove an element of an array.");
+            }
+        };
     }
 
     @Override
     public Object[] toArray() {
-        Person[] personsArray = new Person[persons.size()];
-        for (int i = 0; i < persons.size(); i++) {
-            personsArray[i] = persons.get(i);
-        }
-        return personsArray;
+        return persons;
     }
 
-    //todo
     @Override
     public <T> T[] toArray(T[] ts) {
-        return null;
+        return (T[]) persons;
     }
 
-    //todo
     @Override
     public boolean add(Person person) {
-        return false;
+        Person[] newPersons = new Person[persons.length + 1];
+        System.arraycopy(persons, 0, newPersons, 0, persons.length);
+        newPersons[persons.length + 1] = person;
+        persons = newPersons;
+        return true;
     }
 
-    //todo
     @Override
     public boolean remove(Object o) {
         return false;
     }
 
-    //todo
     @Override
     public boolean containsAll(Collection<?> collection) {
         return false;
     }
 
-    //todo
     @Override
     public boolean addAll(Collection<? extends Person> collection) {
         return false;
     }
 
-    //todo
     @Override
     public boolean addAll(int i, Collection<? extends Person> collection) {
         return false;
     }
 
-    //todo
     @Override
     public boolean removeAll(Collection<?> collection) {
         return false;
     }
 
-    //todo
     @Override
     public boolean retainAll(Collection<?> collection) {
         return false;
     }
 
-    //todo
     @Override
     public void replaceAll(UnaryOperator<Person> operator) {
 
     }
 
-    //todo
     @Override
     public void sort(Comparator<? super Person> c) {
 
     }
 
-    //todo
     @Override
     public void clear() {
-
+        persons = new Person[0];
     }
 
-    //todo
     @Override
     public Person get(int i) {
-        return persons.get(i);
+        return persons[i];
     }
 
-    //todo
     @Override
     public Person set(int i, Person person) {
         return null;
     }
 
-    //todo
     @Override
     public void add(int i, Person person) {
-
+        persons[i] = person;
     }
 
-    //todo
     @Override
     public Person remove(int i) {
         return null;
@@ -132,35 +140,44 @@ public class PersonList implements List<Person> {
 
     @Override
     public int indexOf(Object o) {
-        return persons.indexOf((Person) o);
+        return 0;
     }
 
     @Override
     public int lastIndexOf(Object o) {
-        return persons.lastIndexOf((Person) o);
+        return 0;
     }
 
-    //todo
     @Override
     public ListIterator<Person> listIterator() {
         return null;
     }
 
-    //todo
     @Override
     public ListIterator<Person> listIterator(int i) {
         return null;
     }
 
-    //todo
     @Override
     public List<Person> subList(int i, int i1) {
         return null;
     }
 
-    //todo
     @Override
     public Spliterator<Person> spliterator() {
         return null;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+        PersonList people = (PersonList) o;
+        return Arrays.equals(persons, people.persons);
+    }
+
+    @Override
+    public int hashCode() {
+        return Arrays.hashCode(persons);
     }
 }
