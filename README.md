@@ -1,1 +1,1 @@
-# java-basic-for-de
+# EPAM internal course "Java and Scala basics for Data Engineers"
