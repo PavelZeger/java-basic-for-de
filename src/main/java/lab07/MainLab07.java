@@ -11,7 +11,6 @@ import java.time.format.DateTimeFormatter;
 public class MainLab07 {
     public static void main(String[] args) {
 
-
         DateTimeFormatter formatterDate = DateTimeFormatter.ofPattern("yyyy-MM-dd");
         DateFormatService dateFormatServiceDate = new DateFormatService(formatterDate);
 
