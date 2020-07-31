@@ -8,11 +8,11 @@ import java.util.Objects;
 /**
  * @author Pavel Zeger
  */
-public class DateFormatUtil {
+public class DateFormatService {
 
     private DateTimeFormatter formatter;
 
-    public DateFormatUtil(DateTimeFormatter formatter) {
+    public DateFormatService(DateTimeFormatter formatter) {
         this.formatter = formatter;
     }
 
