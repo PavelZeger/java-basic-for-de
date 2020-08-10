@@ -1,7 +1,5 @@
 package lab10;
 
-import java.util.ArrayList;
-
 /**
  * @author Pavel Zeger
  */
