@@ -54,4 +54,13 @@ public class Point {
     public int hashCode() {
         return Objects.hash(getX(), getY(), getZ());
     }
+
+    @Override
+    public String toString() {
+        return "Point{" +
+                "x=" + x +
+                ", y=" + y +
+                ", z=" + z +
+                '}';
+    }
 }
