@@ -3,7 +3,7 @@ package lab16;
 import org.apache.spark.SparkConf;
 import org.apache.spark.api.java.JavaRDD;
 import org.apache.spark.api.java.JavaSparkContext;
-import org.apache.spark.sql.Row;
+import scala.Tuple2;
 
 /**
  * @author Pavel Zeger
@@ -27,12 +27,17 @@ public class TaxiService {
                 .map(row -> Integer.parseInt(row.split("\\s")[2]))
                 .reduce(Integer::sum);
 
-        //Write names of 3 drivers with max total kilometers in this day(sort top to down)
-
-
         System.out.format("Number of lines in `taxi_orders.txt`: %d\n", numberOfRows);
         System.out.format("Number of trips to Boston longer than 10 km: %d\n", numberOfTrips);
         System.out.printf("Amount of all trips to Boston in kilometers: %d\n", sumOfKms);
+
+        //Write names of 3 drivers with max total kilometers in this day(sort top to down)
+        orders.mapToPair(row -> new Tuple2<>(row.split("\\s")[0], Integer.parseInt(row.split("\\s")[2])))
+                .collect()
+                .forEach(System.out::println);
+
+
+
     }
 
 
