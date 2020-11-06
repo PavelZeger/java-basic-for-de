@@ -1,16 +1,17 @@
-package lab17
+package lab18
 
 import java.io.InputStream
 import java.util.Properties
+import lab17.WordsUtil
 import org.apache.spark.rdd.RDD
 import scala.collection.JavaConverters._
 
 /**
  * @author Pavel Zeger
  */
-class JudgementServiceScala extends Serializable with SparkConfigurationScala {
+object JudgementServiceScala extends Serializable with SparkConfigurationScala {
 
-  private def getGarbageWords: List[String] = {
+  private def getGarbageWordsScala: List[String] = {
 
     val properties: Properties = new Properties
     val inputStream: InputStream = ClassLoader.getSystemResourceAsStream("user.properties")
@@ -18,30 +19,30 @@ class JudgementServiceScala extends Serializable with SparkConfigurationScala {
     properties
       .getProperty("garbage")
       .split(",")
-      .map(word => word.toLowerCase.trim.strip)
+      .map(_.toLowerCase.trim.strip)
       .toList
 
   }
 
-  def topWords(artistName: String, num: Int): List[String] = {
+  def topWordsScala(artistName: String, num: Int): List[String] = {
 
-    val lines: RDD[String] = sparkContext.textFile(s"data/songs/$artistName/*")
+    val lines: RDD[String] = sparkContext.textFile(s"src/main/resources/songs/$artistName/*")
     lines
-      .map(toLowerCase)
+      .map(_.toLowerCase)
       .flatMap(WordsUtil.getWords(_).asScala)
-      .filter(word => !getGarbageWords.contains(word))
-      .map(word => Tuple2(word, 1))
+      .filter(word => !getGarbageWordsScala.contains(word))
+      .map(Tuple2(_, 1))
       .reduceByKey(_ + _)
       .take(num)
-      .map(tuple => tuple._1)
+      .map(_._1)
       .toList
 
   }
 
   def commonPopularWords(firstArtist: String, secondArtist: String, num: Int): Int = {
 
-    val firstArtistWords: List[String] = topWords(firstArtist, num)
-    val secondArtistWords: List[String] = topWords(secondArtist, num)
+    val firstArtistWords: List[String] = topWordsScala(firstArtist, num)
+    val secondArtistWords: List[String] = topWordsScala(secondArtist, num)
     firstArtistWords.intersect(secondArtistWords).size
 
   }

@@ -37,7 +37,7 @@ public class JudgementService implements Serializable {
     }
 
     public List<String> topWords(String artistName, int num) {
-        JavaRDD<String> lines = sparkContext.textFile("data/songs/" + artistName + "/*");
+        JavaRDD<String> lines = sparkContext.textFile(String.format("src/main/resources/songs/%s/*", artistName));
         return lines.map(String::toLowerCase)
                 .flatMap(WordsUtil::getWords)
                 .filter(word -> !this.getGarbageWords().contains(word))
