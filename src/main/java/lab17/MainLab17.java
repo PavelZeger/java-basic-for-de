@@ -17,7 +17,6 @@ public class MainLab17 {
 
         System.out.println("Common words of Britney:");
         wordsListBritney.forEach(System.out::println);
-
         System.out.println("Common words of Ketty:");
         wordsListKetty.forEach(System.out::println);
 
