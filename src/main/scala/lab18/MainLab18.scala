@@ -5,9 +5,10 @@ package lab18
  */
 object MainLab18 extends App {
 
-  val wordsListBritney: List[String] = JudgementServiceScala.topWordsScala("britney", 5)
-  val wordsListKetty: List[String] = JudgementServiceScala.topWordsScala("ketty", 5)
-  val commonWordsAmount: Int = JudgementServiceScala.commonPopularWords("britney", "ketty", 5)
+  val garbageWords: List[String] = JudgementServiceScala.getGarbageWordsScala
+  val wordsListBritney: List[String] = JudgementServiceScala.topWordsScala("britney", 5, garbageWords)
+  val wordsListKetty: List[String] = JudgementServiceScala.topWordsScala("ketty", 5, garbageWords)
+  val commonWordsAmount: Int = JudgementServiceScala.commonPopularWords("britney", "ketty", 5, garbageWords)
 
   println("Common words of Britney:")
   wordsListBritney.foreach(println(_))

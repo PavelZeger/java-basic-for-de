@@ -25,7 +25,7 @@ public class JudgementService implements Serializable {
     private final transient JavaSparkContext sparkContext = new SparkConfiguration().javaSparkContext(sparkConfiguration);
 
     @SneakyThrows
-    private List<String> getGarbageWords() {
+    public List<String> getGarbageWords() {
         Properties properties = new Properties();
         InputStream inputStream = ClassLoader.getSystemResourceAsStream("user.properties");
         properties.load(inputStream);
@@ -36,23 +36,34 @@ public class JudgementService implements Serializable {
 
     }
 
-    public List<String> topWords(String artistName, int num) {
+    public List<String> topWords(String artistName,
+                                 int wordsAmount,
+                                 List<String> garbageWords) {
         JavaRDD<String> lines = sparkContext.textFile(String.format("src/main/resources/songs/%s/*", artistName));
         return lines.map(String::toLowerCase)
                 .flatMap(WordsUtil::getWords)
-                .filter(word -> !this.getGarbageWords().contains(word))
+                .filter(word -> !garbageWords.contains(word))
                 .mapToPair(word -> Tuple2.apply(word, 1))
                 .reduceByKey(Integer::sum)
-                .take(num)
+                .take(wordsAmount)
                 .stream()
                 .map(Tuple2::_1)
                 .collect(Collectors.toList());
 
     }
 
-    public int commonPopularWords(String firstArtist, String secondArtist, int num) {
-        ArrayList<String> firstArtistWords = new java.util.ArrayList<>(topWords(firstArtist, num));
-        ArrayList<String> secondArtistWords = new java.util.ArrayList<>(topWords(secondArtist, num));
+    public int commonPopularWords(String firstArtist,
+                                  String secondArtist,
+                                  int wordsAmount,
+                                  List<String> garbageWords) {
+        ArrayList<String> firstArtistWords = new java.util.ArrayList<>(topWords(
+                firstArtist,
+                wordsAmount,
+                garbageWords));
+        ArrayList<String> secondArtistWords = new java.util.ArrayList<>(topWords(
+                secondArtist,
+                wordsAmount,
+                garbageWords));
         firstArtistWords.retainAll(secondArtistWords);
         return firstArtistWords.size();
 
