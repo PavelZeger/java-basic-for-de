@@ -53,4 +53,5 @@ object MainLab19 extends App with SparkConfigurationScala {
   println(s"The most popular skill is: $mostPopularSkill")
   filteredSalaryDataframe.show()
 
+
 }
